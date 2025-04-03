@@ -1,0 +1,61 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">Community Groups</h1>
+    <%= link_to 'Create New Group', new_group_path, class: 'bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg' %>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @groups.each do |group| %>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <%= image_tag group.user.avatar_url, class: "w-10 h-10 rounded-full mr-4" if group.user.avatar.attached? %>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-900"><%= link_to group.name, group_path(group), class: "hover:text-blue-600" %></h2>
+              <p class="text-sm text-gray-600">Created by <%= group.user.username %></p>
+            </div>
+          </div>
+          
+          <p class="text-gray-700 mb-4 line-clamp-3"><%= group.description %></p>
+          
+          <div class="flex items-center justify-between">
+            <div class="flex items-center text-gray-600">
+              <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span><%= group.members.count %> members</span>
+            </div>
+            
+            <% if group.members.include?(current_user) %>
+              <%= button_to 'Leave', leave_group_path(group), method: :delete, class: 'text-red-600 hover:text-red-800 font-medium' %>
+            <% else %>
+              <%= button_to 'Join', join_group_path(group), method: :post, class: 'text-blue-600 hover:text-blue-800 font-medium' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @groups.empty? %>
+    <div class="text-center py-12">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No groups yet</h3>
+      <p class="mt-1 text-sm text-gray-500">Get started by creating a new group.</p>
+      <div class="mt-6">
+        <%= link_to new_group_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
+          <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Create New Group
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="mt-8">
+    <%= paginate @groups %>
+  </div>
+</div> 

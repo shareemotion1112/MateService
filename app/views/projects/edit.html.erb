@@ -1,0 +1,93 @@
+<div class="bg-white">
+  <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <div class="px-4 sm:px-0">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Edit Project</h3>
+            <p class="mt-1 text-sm text-gray-600">
+              Update your project details and requirements.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-5 md:mt-0 md:col-span-2">
+          <%= form_with(model: @project, local: true, class: "space-y-6") do |f| %>
+            <div class="shadow sm:rounded-md sm:overflow-hidden">
+              <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <% if @project.errors.any? %>
+                  <div class="rounded-md bg-red-50 p-4">
+                    <div class="flex">
+                      <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800">
+                          <%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:
+                        </h3>
+                        <div class="mt-2 text-sm text-red-700">
+                          <ul class="list-disc pl-5 space-y-1">
+                            <% @project.errors.full_messages.each do |msg| %>
+                              <li><%= msg %></li>
+                            <% end %>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+
+                <div>
+                  <%= f.label :title, class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= f.text_field :title, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+                  </div>
+                </div>
+
+                <div>
+                  <%= f.label :description, class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= f.text_area :description, rows: 5, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
+                  </div>
+                  <p class="mt-2 text-sm text-gray-500">
+                    Brief description of your project idea and what kind of team members you're looking for.
+                  </p>
+                </div>
+
+                <div>
+                  <%= f.label :status, class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= f.select :status, Project.statuses.keys.map { |s| [s.titleize, s] }, {}, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" %>
+                  </div>
+                </div>
+
+                <div>
+                  <%= f.label :skill_ids, "Required Skills", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= f.collection_check_boxes :skill_ids, Skill.all, :id, :name do |b| %>
+                      <div class="relative flex items-start">
+                        <div class="flex items-center h-5">
+                          <%= b.check_box class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+                        </div>
+                        <div class="ml-3 text-sm">
+                          <%= b.label class: "font-medium text-gray-700" %>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <%= link_to "Cancel", project_path(@project), class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+                <%= f.submit "Update Project", class: "ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

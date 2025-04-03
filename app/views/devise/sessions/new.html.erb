@@ -1,0 +1,77 @@
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      로그인
+    </h2>
+    <p class="mt-2 text-center text-sm text-gray-600">
+      또는
+      <%= link_to "새 계정 만들기", new_registration_path(resource_name), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6", data: { turbo: false } }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div>
+          <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.password_field :password, autocomplete: "current-password",
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <%= f.check_box :remember_me, class: "h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" %>
+            <%= f.label :remember_me, class: "ml-2 block text-sm text-gray-900" %>
+          </div>
+
+          <div class="text-sm">
+            <%= link_to "비밀번호를 잊으셨나요?", new_password_path(resource_name), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.submit "로그인",
+              class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">
+              또는 다음으로 계속하기
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 gap-3">
+          <% if resource_class.omniauth_providers.include?(:google_oauth2) %>
+            <%= button_to user_google_oauth2_omniauth_authorize_path,
+                data: { turbo: false },
+                class: "w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50" do %>
+              <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.545,12.151L12.545,12.151c0,1.054,0.855,1.909,1.909,1.909h3.536c-0.367,1.719-1.159,3.25-2.27,4.401 c-1.647,1.647-3.924,2.667-6.437,2.667c-5.042,0-9.136-4.094-9.136-9.136s4.094-9.136,9.136-9.136c2.513,0,4.79,1.02,6.437,2.667 c0.832,0.832,1.507,1.821,1.986,2.917H9.455c-1.054,0-1.909,0.855-1.909,1.909c0,1.054,0.855,1.909,1.909,1.909h1.999" />
+              </svg>
+              Google로 로그인
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

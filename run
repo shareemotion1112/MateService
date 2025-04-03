@@ -1,0 +1,11 @@
+clear
+bundle install
+
+
+rails tmp:clear && rails tmp:cache:clear && rails assets:clobber && rails log:clear
+
+rails assets:clobber && bin/rails assets:precompile
+
+rails restart
+
+rails server

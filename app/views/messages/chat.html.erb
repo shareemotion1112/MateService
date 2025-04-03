@@ -1,0 +1,108 @@
+<div class="bg-white">
+  <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <img class="h-12 w-12 rounded-full" src="https://ui-avatars.com/api/?name=<%= @chat_user.name %>&background=6366F1&color=fff" alt="">
+          </div>
+          <div class="ml-4">
+            <h1 class="text-2xl font-bold text-gray-900"><%= @chat_user.name %></h1>
+            <p class="text-sm text-gray-500"><%= @chat_user.role.titleize %></p>
+          </div>
+        </div>
+        <%= link_to messages_path, class: "text-gray-400 hover:text-gray-500" do %>
+          <span class="sr-only">Back to messages</span>
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        <% end %>
+      </div>
+
+      <div class="bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <div class="space-y-4 h-96 overflow-y-auto" id="messages" data-chat-id="<%= [@chat_user.id, current_user.id].sort.join('_') %>">
+            <% @messages.each do |message| %>
+              <div class="flex <%= message.sender == current_user ? 'justify-end' : 'justify-start' %>">
+                <div class="flex items-end">
+                  <% if message.sender != current_user %>
+                    <div class="flex-shrink-0 mr-3">
+                      <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name=<%= message.sender.name %>&background=6366F1&color=fff" alt="">
+                    </div>
+                  <% end %>
+                  <div>
+                    <div class="<%= message.sender == current_user ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-900' %> rounded-lg px-4 py-2 max-w-xs lg:max-w-md">
+                      <p class="text-sm"><%= message.content %></p>
+                    </div>
+                    <div class="mt-1 text-xs text-gray-500">
+                      <%= time_ago_in_words(message.created_at) %> ago
+                      <% if message.sender == current_user && message.read_at? %>
+                        · Read
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <%= form_with(model: @message, local: true, class: "mt-6") do |f| %>
+            <%= f.hidden_field :receiver_id, value: @chat_user.id %>
+            <div class="flex space-x-3">
+              <div class="flex-1">
+                <%= f.text_field :content, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md", placeholder: "Type your message..." %>
+              </div>
+              <%= f.submit "Send", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= content_for :scripts do %>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const messages = document.getElementById('messages');
+      messages.scrollTop = messages.scrollHeight;
+
+      App.chat = App.cable.subscriptions.create(
+        {
+          channel: "ChatChannel",
+          chat_id: messages.dataset.chatId
+        },
+        {
+          received: function(data) {
+            const message = data.message;
+            const currentUserId = <%= current_user.id %>;
+            const isSender = message.sender_id === currentUserId;
+
+            const messageHtml = `
+              <div class="flex ${isSender ? 'justify-end' : 'justify-start'}">
+                <div class="flex items-end">
+                  ${!isSender ? `
+                    <div class="flex-shrink-0 mr-3">
+                      <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name=${message.sender_name}&background=6366F1&color=fff" alt="">
+                    </div>
+                  ` : ''}
+                  <div>
+                    <div class="${isSender ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-900'} rounded-lg px-4 py-2 max-w-xs lg:max-w-md">
+                      <p class="text-sm">${message.content}</p>
+                    </div>
+                    <div class="mt-1 text-xs text-gray-500">
+                      just now
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            messages.insertAdjacentHTML('beforeend', messageHtml);
+            messages.scrollTop = messages.scrollHeight;
+          }
+        }
+      );
+    });
+  </script>
+<% end %> 

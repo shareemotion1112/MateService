@@ -1,0 +1,1 @@
+rm -rf tmp/cache public/assets && bin/rails assets:precompile && bin/rails restart && bin/rails server
