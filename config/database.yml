@@ -16,16 +16,16 @@ default: &default
     adapter: postgresql
     encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    url: <%= ENV['DATABASE_URL'] %>
-    host: <%= ENV['SUPABASE_HOST'] %>
-    database: <%= ENV['SUPABASE_DATABASE'] %>
-    username: <%= ENV['SUPABASE_USER'] %>
-    password: <%= ENV['SUPABASE_PASSWORD'] %>
-    port: <%= ENV['SUPABASE_PORT'] %>
+    url: <%= ENV['SUPABASE_DB_URL'] %>
+    host: <%= ENV['SUPABASE_DB_HOST'] %>
+    database: <%= ENV['SUPABASE_DB_NAME'] %>
+    username: <%= ENV['SUPABASE_DB_USER'] %>
+    password: <%= ENV['SUPABASE_DB_PASSWORD'] %>
+    port: <%= ENV['SUPABASE_DB_PORT'] %>
 
 development:
     <<: *default
-    database: <%= ENV['SUPABASE_DATABASE'] || 'buddy_up_development' %>
+    database: <%= ENV['SUPABASE_DB_NAME'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -56,6 +56,6 @@ test:
 #
 production:
     <<: *default
-    database: <%= ENV['SUPABASE_DATABASE'] %>
-    username: <%= ENV['SUPABASE_USER'] %>
-    password: <%= ENV['SUPABASE_PASSWORD'] %>
+    database: <%= ENV['SUPABASE_DB_NAME'] %>
+    username: <%= ENV['SUPABASE_DB_USER'] %>
+    password: <%= ENV['SUPABASE_DB_PASSWORD'] %>
