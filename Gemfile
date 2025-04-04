@@ -51,6 +51,9 @@ gem "omniauth-rails_csrf_protection"
 # Authorization
 gem "pundit"
 
+# Environment variables
+gem "dotenv-rails"
+
 # API
 # We'll use the Supabase REST API directly instead of a gem
 # gem "supabase-ruby"
