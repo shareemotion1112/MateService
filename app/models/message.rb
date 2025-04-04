@@ -1,6 +1,6 @@
 class Message < ApplicationRecord
-  belongs_to :sender, class_name: 'User'
-  belongs_to :receiver, class_name: 'User'
+  belongs_to :sender, class_name: "User"
+  belongs_to :receiver, class_name: "User"
 
   # Validations
   validates :content, presence: true
@@ -32,7 +32,7 @@ class Message < ApplicationRecord
   end
 
   def broadcast_message
-    ActionCable.server.broadcast "chat_#{[sender_id, receiver_id].sort.join('_')}", {
+    ActionCable.server.broadcast "chat_#{[ sender_id, receiver_id ].sort.join('_')}", {
       message: self,
       sender: sender,
       receiver: receiver

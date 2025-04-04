@@ -1,7 +1,7 @@
 module Api
   module V1
     class ProjectsController < BaseController
-      before_action :set_project, only: [:show, :update, :destroy]
+      before_action :set_project, only: [ :show, :update, :destroy ]
 
       def index
         @projects = Project.includes(:user, :skills)
@@ -20,7 +20,7 @@ module Api
       end
 
       def show
-        render json: @project.as_json(include: [:user, :skills, :team_members])
+        render json: @project.as_json(include: [ :user, :skills, :team_members ])
       end
 
       def create
@@ -59,4 +59,4 @@ module Api
       end
     end
   end
-end 
+end

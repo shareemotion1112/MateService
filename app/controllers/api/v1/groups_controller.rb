@@ -1,7 +1,7 @@
 module Api
   module V1
     class GroupsController < BaseController
-      before_action :set_group, only: [:show, :update, :destroy, :join, :leave]
+      before_action :set_group, only: [ :show, :update, :destroy, :join, :leave ]
 
       def index
         @groups = Group.includes(:user, :members)
@@ -20,7 +20,7 @@ module Api
       end
 
       def show
-        render json: @group.as_json(include: [:user, :members])
+        render json: @group.as_json(include: [ :user, :members ])
       end
 
       def create
@@ -78,4 +78,4 @@ module Api
       end
     end
   end
-end 
+end

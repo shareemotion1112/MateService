@@ -10,7 +10,7 @@ class Project < ApplicationRecord
   validates :status, presence: true
 
   # Enums
-  enum :status, [:idea, :planning, :development, :launched], default: :idea
+  enum :status, [ :idea, :planning, :development, :launched ], default: :idea
 
   # Scopes
   scope :active, -> { where.not(status: :launched) }

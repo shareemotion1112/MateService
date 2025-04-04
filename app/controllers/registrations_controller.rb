@@ -1,20 +1,20 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_action :configure_account_update_params, only: [:update]
-  before_action :configure_sign_up_params, only: [:create]
-  before_action :set_roles_by_category, only: [:edit, :new]
+  before_action :configure_account_update_params, only: [ :update ]
+  before_action :configure_sign_up_params, only: [ :create ]
+  before_action :set_roles_by_category, only: [ :edit, :new ]
 
   protected
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :username, :email, :description, :years_of_experience, role_ids: [], custom_roles: [:name, :category]])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :username, :email, :description, :years_of_experience, role_ids: [], custom_roles: [ :name, :category ] ])
   end
 
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [
       :name, :username, :email, :avatar, :description, :years_of_experience,
-      role_ids: [], 
+      role_ids: [],
       skill_ids: [],
-      custom_roles: [:name, :category]
+      custom_roles: [ :name, :category ]
     ])
   end
 
@@ -32,9 +32,9 @@ class RegistrationsController < Devise::RegistrationsController
       # 기술 스택과 역할 ID 처리
       if params[:skill_ids].present?
         params[:skill_ids] = params[:skill_ids].map do |id|
-          if id.start_with?('skill_')
+          if id.start_with?("skill_")
             # 새로운 기술 스택 생성
-            name = id.sub('skill_', '')
+            name = id.sub("skill_", "")
             Skill.find_or_create_by!(name: name).id
           else
             id.to_i
@@ -47,7 +47,7 @@ class RegistrationsController < Devise::RegistrationsController
         custom_roles = params[:custom_roles] || []
         custom_role_ids = custom_roles.map do |role_data|
           next if role_data[:name].blank? || role_data[:category].blank?
-          
+
           # 동일한 이름과 카테고리의 역할이 있는지 확인
           Role.find_or_create_by!(
             name: role_data[:name],

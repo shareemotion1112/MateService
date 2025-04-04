@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_chat_user, only: [:chat]
+  before_action :set_chat_user, only: [ :chat ]
 
   def index
     @messages = current_user.received_messages
@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
     @message = current_user.sent_messages.build(message_params)
 
     if @message.save
-      redirect_to chat_messages_path(user_id: @message.receiver_id), notice: 'Message was sent successfully.'
+      redirect_to chat_messages_path(user_id: @message.receiver_id), notice: "Message was sent successfully."
     else
       render :new, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class MessagesController < ApplicationController
     @messages = Message.between_users(current_user.id, @chat_user.id)
                       .order(created_at: :asc)
                       .includes(:sender, :receiver)
-    
+
     @messages.where(receiver: current_user).update_all(read_at: Time.current)
     @message = Message.new(receiver: @chat_user)
   end
@@ -47,4 +47,4 @@ class MessagesController < ApplicationController
   def message_params
     params.require(:message).permit(:content, :receiver_id)
   end
-end 
+end

@@ -10,13 +10,13 @@ module Api
         render json: { error: message }, status: status
       end
 
-      def render_not_found(message = 'Resource not found')
+      def render_not_found(message = "Resource not found")
         render_error(message, :not_found)
       end
 
-      def render_unauthorized(message = 'Unauthorized')
+      def render_unauthorized(message = "Unauthorized")
         render_error(message, :unauthorized)
       end
     end
   end
-end 
+end

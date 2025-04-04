@@ -19,10 +19,10 @@ module Api
 
       def show
         @skill = Skill.find(params[:id])
-        render json: @skill.as_json(include: [:users, :projects])
+        render json: @skill.as_json(include: [ :users, :projects ])
       rescue ActiveRecord::RecordNotFound
         render_not_found
       end
     end
   end
-end 
+end

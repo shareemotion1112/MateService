@@ -3,19 +3,19 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
   # 프로필 이미지 첨부
   has_one_attached :avatar
 
   # 관계 설정
-  has_many :owned_projects, class_name: 'Project', foreign_key: 'user_id', dependent: :destroy
+  has_many :owned_projects, class_name: "Project", foreign_key: "user_id", dependent: :destroy
   has_many :team_members, dependent: :destroy
   has_many :projects, through: :team_members
-  has_many :sent_messages, class_name: 'Message', foreign_key: 'sender_id', dependent: :destroy
-  has_many :received_messages, class_name: 'Message', foreign_key: 'receiver_id', dependent: :destroy
-  has_many :owned_groups, class_name: 'Group', foreign_key: 'user_id', dependent: :destroy
-  
+  has_many :sent_messages, class_name: "Message", foreign_key: "sender_id", dependent: :destroy
+  has_many :received_messages, class_name: "Message", foreign_key: "receiver_id", dependent: :destroy
+  has_many :owned_groups, class_name: "Group", foreign_key: "user_id", dependent: :destroy
+
   # 역할과 기술 스택
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def self.generate_unique_username(email)
-    base_username = email.split('@').first.gsub(/[^a-zA-Z0-9_]/, '_')
+    base_username = email.split("@").first.gsub(/[^a-zA-Z0-9_]/, "_")
     username = base_username
     counter = 1
 
