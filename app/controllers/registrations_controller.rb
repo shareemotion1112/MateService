@@ -1,12 +1,12 @@
 class RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
   before_action :configure_sign_up_params, only: [:create]
-  before_action :set_roles_by_category, only: [:edit]
+  before_action :set_roles_by_category, only: [:edit, :new]
 
   protected
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :username, :email])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :username, :email, :description, :years_of_experience, role_ids: [], custom_roles: [:name, :category]])
   end
 
   def configure_account_update_params

@@ -1,1 +1,176 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50;
+  }
+}
+
+@layer components {
+  .auth-container {
+    @apply max-w-2xl mx-auto mt-8 p-8 bg-white rounded-lg shadow-md;
+  }
+
+  .auth-container h2 {
+    @apply text-2xl font-bold text-gray-900 mb-6 text-center;
+  }
+
+  .field {
+    @apply mb-6;
+  }
+
+  .field label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .field input[type="email"],
+  .field input[type="password"],
+  .field input[type="text"],
+  .field textarea {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500;
+  }
+
+  .field em {
+    @apply text-sm text-gray-500 ml-2;
+  }
+
+  .roles-container {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2;
+  }
+
+  .category-group {
+    @apply p-4 bg-gray-50 rounded-md;
+  }
+
+  .category-group h4 {
+    @apply text-lg font-medium text-gray-900 mb-3 pb-2 border-b border-blue-500;
+  }
+
+  .role-option {
+    @apply flex items-center space-x-2 mb-2;
+  }
+
+  .role-option input[type="checkbox"] {
+    @apply h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500;
+  }
+
+  .role-option label {
+    @apply text-sm text-gray-700;
+  }
+
+  .actions {
+    @apply mt-8 text-center;
+  }
+
+  .actions input[type="submit"] {
+    @apply w-full md:w-auto px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+  }
+
+  .devise-links {
+    @apply mt-6 text-center space-x-4;
+  }
+
+  .devise-links a {
+    @apply text-sm text-blue-600 hover:text-blue-800;
+  }
+
+  .avatar-upload {
+    @apply mb-8 text-center;
+  }
+
+  .avatar-preview {
+    @apply w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-100 border-4 border-blue-500;
+  }
+
+  .avatar-preview img {
+    @apply w-full h-full object-cover;
+  }
+
+  .avatar-upload input[type="file"] {
+    @apply block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100;
+  }
+
+  #error_explanation {
+    @apply bg-red-50 text-red-700 p-4 rounded-md mb-6;
+  }
+
+  #error_explanation h2 {
+    @apply text-lg font-medium text-red-700 mb-2;
+  }
+
+  #error_explanation ul {
+    @apply list-disc pl-5 space-y-1;
+  }
+
+  .field_with_errors input {
+    @apply border-red-500;
+  }
+
+  .custom-role-fields {
+    @apply flex gap-2 mb-2;
+  }
+
+  .custom-role-fields input,
+  .custom-role-fields select {
+    @apply flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500;
+  }
+
+  .custom-role-fields button {
+    @apply px-3 py-2 text-sm text-red-600 hover:text-red-800;
+  }
+
+  #add-custom-role {
+    @apply w-full mt-2 px-4 py-2 text-sm text-blue-600 border border-blue-300 rounded-md hover:bg-blue-50;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply px-4 py-2 rounded-md text-white font-medium transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-blue-500 hover:bg-blue-600;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-500 hover:bg-gray-600;
+  }
+
+  .input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6;
+  }
+
+  .header {
+    @apply text-2xl font-bold text-gray-900 mb-4;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .checkbox-group {
+    @apply space-y-2;
+  }
+
+  .checkbox-item {
+    @apply flex items-center;
+  }
+
+  .checkbox-item input[type="checkbox"] {
+    @apply w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500;
+  }
+
+  .checkbox-item label {
+    @apply ml-2 text-sm text-gray-700;
+  }
+}

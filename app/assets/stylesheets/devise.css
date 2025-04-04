@@ -1,0 +1,188 @@
+/* 회원가입 & 마이페이지 공통 스타일 */
+.auth-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.field label {
+  display: block;
+  color: #34495e;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.field input[type="email"],
+.field input[type="password"],
+.field input[type="text"],
+.field textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.field input[type="email"]:focus,
+.field input[type="password"]:focus,
+.field input[type="text"]:focus,
+.field textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* 역할 선택 스타일 */
+.roles-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.category-group {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.category-group h4 {
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #3498db;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.role-option input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.role-option label {
+  margin: 0;
+  font-weight: normal;
+}
+
+/* 버튼 스타일 */
+.actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.actions input[type="submit"] {
+  background-color: #3498db;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.actions input[type="submit"]:hover {
+  background-color: #2980b9;
+}
+
+/* 프로필 이미지 업로드 */
+.avatar-upload {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.avatar-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  background: #f8f9fa;
+  border: 3px solid #3498db;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 기술 스택 스타일 */
+.skills-container {
+  margin-top: 1rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.skill-tag {
+  background: #e1f0fa;
+  color: #2980b9;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* 링크 스타일 */
+.devise-links {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.devise-links a {
+  color: #3498db;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.devise-links a:hover {
+  text-decoration: underline;
+}
+
+/* 에러 메시지 스타일 */
+#error_explanation {
+  background: #fee;
+  color: #e74c3c;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+}
+
+#error_explanation h2 {
+  color: #e74c3c;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+}
+
+#error_explanation ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.field_with_errors input {
+  border-color: #e74c3c;
+}
