@@ -1,0 +1,6 @@
+ko:
+  project:
+    status:
+      recruiting: "모집 중"
+      in_progress: "진행 중"
+      completed: "완료"

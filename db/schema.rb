@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_04_001625) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_05_120613) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -90,6 +90,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_04_001625) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
+    t.string "image_path"
+    t.string "required_skills"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 

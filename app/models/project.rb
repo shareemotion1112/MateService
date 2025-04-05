@@ -8,12 +8,13 @@ class Project < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :status, presence: true
+  validates :required_skills, presence: true
 
   # Enums
-  enum :status, [ :idea, :planning, :development, :launched ], default: :idea
+  enum :status, [ :recruiting, :in_progress, :completed ], default: :recruiting
 
   # Scopes
-  scope :active, -> { where.not(status: :launched) }
+  scope :active, -> { where(status: :recruiting) }
   scope :by_status, ->(status) { where(status: status) }
 
   # Methods
@@ -23,5 +24,20 @@ class Project < ApplicationRecord
 
   def team_size
     team_members.count
+  end
+
+  def can_apply?(user)
+    status == "recruiting" && user != self.user && !team_members.exists?(user: user)
+  end
+
+  def image_url
+    @image_url ||= begin
+      return nil unless image_path.present?
+      supa = SupabaseClient.instance
+      { 
+        url: supa.storage.from('projects').create_signed_url(image_path, 3600),
+        public_url: supa.storage.from('projects').get_public_url(image_path)
+      }
+    end
   end
 end

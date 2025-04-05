@@ -4,9 +4,9 @@
       <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
           <div class="px-4 sm:px-0">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Create New Project</h3>
+            <h3 class="text-lg font-medium leading-6 text-gray-900">메이트 찾기 등록</h3>
             <p class="mt-1 text-sm text-gray-600">
-              Share your project idea and find team members to help you build it.
+              함께 일할 메이트를 찾아보세요.
             </p>
           </div>
         </div>
@@ -40,49 +40,61 @@
                 <% end %>
 
                 <div>
-                  <%= f.label :title, class: "block text-sm font-medium text-gray-700" %>
+                  <%= f.label :title, "제목", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
                     <%= f.text_field :title, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
                   </div>
                 </div>
 
                 <div>
-                  <%= f.label :description, class: "block text-sm font-medium text-gray-700" %>
+                  <%= f.label :image, "대표 이미지", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div class="space-y-1 text-center">
+                      <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <div class="flex text-sm text-gray-600">
+                        <label for="project_image" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                          <%= f.file_field :image, class: "sr-only" %>
+                          <span>이미지 업로드</span>
+                        </label>
+                      </div>
+                      <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <%= f.label :description, "상세 설명", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
                     <%= f.text_area :description, rows: 5, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
                   </div>
                   <p class="mt-2 text-sm text-gray-500">
-                    Brief description of your project idea and what kind of team members you're looking for.
+                    프로젝트 내용과 어떤 메이트를 찾고 있는지 설명해주세요.
                   </p>
                 </div>
 
                 <div>
-                  <%= f.label :status, class: "block text-sm font-medium text-gray-700" %>
+                  <%= f.label :required_skills, "필요한 기술", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
-                    <%= f.select :status, Project.statuses.keys.map { |s| [s.titleize, s] }, {}, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" %>
+                    <%= f.text_field :required_skills, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md", placeholder: "예: Ruby on Rails, React, UI/UX 디자인" %>
                   </div>
+                  <p class="mt-2 text-sm text-gray-500">
+                    콤마(,)로 구분하여 입력해주세요
+                  </p>
                 </div>
 
                 <div>
-                  <%= f.label :skill_ids, "Required Skills", class: "block text-sm font-medium text-gray-700" %>
+                  <%= f.label :status, "상태", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
-                    <%= f.collection_check_boxes :skill_ids, Skill.all, :id, :name do |b| %>
-                      <div class="relative flex items-start">
-                        <div class="flex items-center h-5">
-                          <%= b.check_box class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
-                        </div>
-                        <div class="ml-3 text-sm">
-                          <%= b.label class: "font-medium text-gray-700" %>
-                        </div>
-                      </div>
-                    <% end %>
+                    <%= f.select :status, Project.statuses.keys.map { |s| [t("project.status.#{s}"), s] }, {}, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" %>
                   </div>
                 </div>
               </div>
 
               <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                <%= link_to "Cancel", projects_path, class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
-                <%= f.submit "Create Project", class: "ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+                <%= link_to "취소", projects_path, class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+                <%= f.submit "등록하기", class: "ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
               </div>
             </div>
           <% end %>
@@ -90,4 +102,4 @@
       </div>
     </div>
   </div>
-</div> 
+</div>

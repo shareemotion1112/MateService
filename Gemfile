@@ -57,6 +57,7 @@ gem "dotenv-rails"
 # API
 # We'll use the Supabase REST API directly instead of a gem
 # gem "supabase-ruby"
+gem "supabase", "~> 0.1.0"
 
 # Background Jobs
 gem "sidekiq"
